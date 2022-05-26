@@ -13,6 +13,8 @@ Two popular tools (support most of common relational database systems):
 
 _Note: you should install tigergraph & golang first._
 
+_*To be careful: migration would drop all resources first!!!*_
+
 ```sh
 # migrate to specified version, say V1, V2, V3...
 go run main.go -g [version]
