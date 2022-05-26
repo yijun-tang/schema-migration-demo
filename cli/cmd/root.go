@@ -14,6 +14,7 @@ import (
 	"net/http"
 	"os"
 	"os/exec"
+	"path/filepath"
 	"strconv"
 	"strings"
 
@@ -51,13 +52,15 @@ to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		// fmt.Printf("Run: %s, %s\n", currentVersion, rollbackVersion)
 
+		projectRootDir := getProjectRootDir()
+
 		if rollbackVersion == "V-1" {
 			if currentVersion >= targetVersion {
 				fmt.Printf("Current Version: %s\n", currentVersion)
 				return
 			}
 
-			files := listFiles("/home/tigergraph/yijun_ws/schema-migration-demo/database/schemas", "list scripts failed!!!")
+			files := listFiles(projectRootDir+"/database/schemas", "list scripts failed!!!")
 
 			for _, f := range files {
 				name := f.Name()
@@ -66,7 +69,7 @@ to quickly create a Cobra application.`,
 					break
 				}
 				if version > currentVersion {
-					_, err := exec.Command("gsql", fmt.Sprintf("/home/tigergraph/yijun_ws/schema-migration-demo/database/schemas/%s", name)).Output()
+					_, err := exec.Command("gsql", fmt.Sprintf("%s/database/schemas/%s", projectRootDir, name)).Output()
 					if err != nil {
 						fmt.Printf("executing %s failed!!!", name)
 						os.Exit(1)
@@ -121,9 +124,19 @@ to quickly create a Cobra application.`,
 	},
 }
 
+func getProjectRootDir() string {
+	dir, err := filepath.Abs("./..")
+	if err != nil {
+		fmt.Println("fetch project root path failed!!!")
+		os.Exit(1)
+	}
+	return dir
+}
+
 func saveVersion() {
+	projectRootDir := getProjectRootDir()
 	metaInfo.Version = currentVersion
-	f, err := os.Create("/home/tigergraph/yijun_ws/schema-migration-demo/cli/cmd/meta-info.json")
+	f, err := os.Create(projectRootDir + "/cli/cmd/meta-info.json")
 	if err != nil {
 		fmt.Println("open meta-info.json file failed!!!")
 		os.Exit(1)
