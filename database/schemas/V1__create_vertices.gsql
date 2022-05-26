@@ -1,0 +1,24 @@
+DROP ALL
+
+CREATE VERTEX Comment (PRIMARY_ID id UINT, creation_date DATETIME, location_ip STRING,
+    browser_used STRING, content STRING, length UINT) WITH primary_id_as_attribute="TRUE"
+CREATE VERTEX Post (PRIMARY_ID id UINT, image_file STRING, creation_date DATETIME,
+    location_ip STRING, browser_used STRING, lang STRING, content STRING,
+    length UINT) WITH primary_id_as_attribute="TRUE"
+
+// organization
+CREATE VERTEX Company (PRIMARY_ID id UINT, name STRING, url STRING) WITH primary_id_as_attribute="TRUE"
+CREATE VERTEX University (PRIMARY_ID id UINT, name STRING, url STRING) WITH primary_id_as_attribute="TRUE"
+
+// place
+CREATE VERTEX City (PRIMARY_ID id UINT, name STRING, url STRING) WITH primary_id_as_attribute="TRUE"
+CREATE VERTEX Country (PRIMARY_ID id UINT, name STRING, url STRING) WITH primary_id_as_attribute="TRUE"
+CREATE VERTEX Continent (PRIMARY_ID id UINT, name STRING, url STRING) WITH primary_id_as_attribute="TRUE"
+
+// etc
+CREATE VERTEX Forum (PRIMARY_ID id UINT, title STRING, creation_date DATETIME) WITH primary_id_as_attribute="TRUE"
+CREATE VERTEX Person (PRIMARY_ID id UINT, first_name STRING, last_name STRING, gender STRING, birthday DATETIME,
+   creation_date DATETIME, location_ip STRING, browser_used STRING, speaks set<STRING>, email set<STRING>)
+   WITH primary_id_as_attribute="TRUE"
+CREATE VERTEX Tag (PRIMARY_ID id UINT, name STRING, url STRING) WITH primary_id_as_attribute="TRUE"
+CREATE VERTEX Tag_Class (PRIMARY_ID id UINT, name STRING, url STRING) WITH primary_id_as_attribute="TRUE"

@@ -1,0 +1,2 @@
+//create graph type
+CREATE GRAPH ldbc_snb (*)
